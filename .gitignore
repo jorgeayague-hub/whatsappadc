@@ -1,0 +1,14 @@
+node_modules/
+.env
+
+# Datos reales del negocio — no deben subirse al repo (mensajes, pedidos, suscripciones push).
+# El catálogo sí puede versionarse si querés llevar historial de precios; si no, sacalo también.
+src/data/chats.json
+src/data/pedidos.json
+src/data/push-subscriptions.json
+
+# Usuarios y claves del panel (hasheadas, pero mejor no subirlas igual)
+src/data/usuarios.json
+
+.DS_Store
+npm-debug.log

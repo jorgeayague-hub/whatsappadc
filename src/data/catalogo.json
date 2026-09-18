@@ -1,0 +1,821 @@
+[
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Guara - Grande",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 16850,
+    "precio_venta_kg": 21900,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Guara - Mediana",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 15950,
+    "precio_venta_kg": 20740,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez Mariposa Extra Light",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 11000,
+    "precio_venta_kg": 14300,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez con cáscara",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 10kg",
+    "costo_kg": 5000,
+    "precio_venta_kg": 6500,
+    "margen": 0.3
+  },
+  {
+    "categoria": "AVELLANA",
+    "producto": "Avellana (calidad superior)",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg (9-11 Turquía)",
+    "costo_kg": 22900,
+    "precio_venta_kg": 29770,
+    "margen": 0.3
+  },
+  {
+    "categoria": "CASTAÑA DE CAJÚ",
+    "producto": "Castaña de cajú W4 Brasil",
+    "proveedor": "FS",
+    "presentacion": "Caja 22,68kg",
+    "costo_kg": 12500,
+    "precio_venta_kg": 16250,
+    "margen": 0.3
+  },
+  {
+    "categoria": "CASTAÑA DE CAJÚ",
+    "producto": "Castaña de cajú Vietnam",
+    "proveedor": "FS",
+    "presentacion": "Caja 20kg (W4)",
+    "costo_kg": 11600,
+    "precio_venta_kg": 15080,
+    "margen": 0.3
+  },
+  {
+    "categoria": "CHIPS DE BANANA",
+    "producto": "Chip de banana",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 6,8kg",
+    "costo_kg": 9000,
+    "precio_venta_kg": 11700,
+    "margen": 0.3
+  },
+  {
+    "categoria": "COCO",
+    "producto": "Coco rallado low fat",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 6100,
+    "precio_venta_kg": 7930,
+    "margen": 0.3
+  },
+  {
+    "categoria": "COCO",
+    "producto": "Coco rallado high fat",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 8100,
+    "precio_venta_kg": 10530,
+    "margen": 0.3
+  },
+  {
+    "categoria": "COCO",
+    "producto": "Coco en escamas",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 10610,
+    "precio_venta_kg": 13790,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MAÍZ FRITO",
+    "producto": "Maíz frito sabor tradicional",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 8100,
+    "precio_venta_kg": 10530,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MAÍZ FRITO",
+    "producto": "Maíz frito Miel y Mostaza",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 9700,
+    "precio_venta_kg": 12610,
+    "margen": 0.3
+  },
+  {
+    "categoria": "DÁTILES",
+    "producto": "Dátil con carozo Medjool",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg (Israel)",
+    "costo_kg": 18350,
+    "precio_venta_kg": 23860,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní tostado salado S1",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 2250,
+    "precio_venta_kg": 2920,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní tostado sin sal S1",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 2250,
+    "precio_venta_kg": 2920,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas rubia premium sin semilla",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6150,
+    "precio_venta_kg": 8000,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas rubia JUMBO",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6900,
+    "precio_venta_kg": 8970,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas morenas sin semilla",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 3050,
+    "precio_venta_kg": 3960,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de girasol",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 20kg",
+    "costo_kg": 3250,
+    "precio_venta_kg": 4220,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de chía",
+    "proveedor": "FS",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 4560,
+    "precio_venta_kg": 5930,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de lino",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 2220,
+    "precio_venta_kg": 2890,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de zapallo AA",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 11500,
+    "precio_venta_kg": 14950,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PISTACHO",
+    "producto": "Pistacho c/cáscara tostado y salado (premium)",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 11,34kg",
+    "costo_kg": 27000,
+    "precio_venta_kg": 35100,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Papaya multicolor",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 7520,
+    "precio_venta_kg": 9780,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Ciruela sin carozo (chica/mediana)",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg (132-154)",
+    "costo_kg": 6600,
+    "precio_venta_kg": 8580,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Tomate deshidratado",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 10700,
+    "precio_venta_kg": 13910,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Arándano deshidratado",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 11,34kg",
+    "costo_kg": 17000,
+    "precio_venta_kg": 22100,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Premium (con castaña de cajú)",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 13672,
+    "precio_venta_kg": 17770,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix con pistacho y castaña de cajú (top)",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg (Mix FS)",
+    "costo_kg": 17412,
+    "precio_venta_kg": 22640,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix cervecero (maní/maíz frito)",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg (cervecero A)",
+    "costo_kg": 4825,
+    "precio_venta_kg": 6270,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Carmel 27/30",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 18300,
+    "precio_venta_kg": 23790,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Nonpareil 27/30",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 18900,
+    "precio_venta_kg": 24570,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Tipo Nonpareil 2",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 16500,
+    "precio_venta_kg": 21450,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Almendra Guara Nacional - partida",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 12150,
+    "precio_venta_kg": 15800,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez Chandler Mariposa Light 2026",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 9900,
+    "precio_venta_kg": 12870,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez Chandler Cuartos-amber (oscura) 2026",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 5500,
+    "precio_venta_kg": 7150,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PISTACHO",
+    "producto": "Pistacho c/cáscara tostado y salado NACIONAL",
+    "proveedor": "FS",
+    "presentacion": "Caja 15kg",
+    "costo_kg": 23200,
+    "precio_venta_kg": 30160,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PISTACHO",
+    "producto": "Pistacho Pelado Natural",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 46400,
+    "precio_venta_kg": 60320,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de chía B",
+    "proveedor": "FS",
+    "presentacion": "Caja 20kg",
+    "costo_kg": 4210,
+    "precio_venta_kg": 5470,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de zapallo A",
+    "proveedor": "FS",
+    "presentacion": "Caja 25kg",
+    "costo_kg": 8900,
+    "precio_venta_kg": 11570,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní tostado sin sal split (calidad exportación)",
+    "proveedor": "FS",
+    "presentacion": "Caja 25kg",
+    "costo_kg": 2600,
+    "precio_venta_kg": 3380,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní tostado con sal split (calidad exportación)",
+    "proveedor": "FS",
+    "presentacion": "Caja 25kg",
+    "costo_kg": 3000,
+    "precio_venta_kg": 3900,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní tostado sin sal split B",
+    "proveedor": "FS",
+    "presentacion": "Caja 25kg",
+    "costo_kg": 2260,
+    "precio_venta_kg": 2940,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní saborizado CRISJOR (jamón y pizza)",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 3950,
+    "precio_venta_kg": 5140,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MANÍ",
+    "producto": "Maní saborizado (jamón y pizza)",
+    "proveedor": "FS",
+    "presentacion": "Caja 7kg",
+    "costo_kg": 3600,
+    "precio_venta_kg": 4680,
+    "margen": 0.3
+  },
+  {
+    "categoria": "DÁTILES",
+    "producto": "Dátil con carozo Sayer de Irán",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 4340,
+    "precio_venta_kg": 5640,
+    "margen": 0.3
+  },
+  {
+    "categoria": "DÁTILES",
+    "producto": "Dátil con carozo Kalite Irán",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 5950,
+    "precio_venta_kg": 7740,
+    "margen": 0.3
+  },
+  {
+    "categoria": "DÁTILES",
+    "producto": "Dátil con carozo Deglet Argelia",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 6120,
+    "precio_venta_kg": 7960,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas rubia económica sin semilla",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 4525,
+    "precio_venta_kg": 5880,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasa de uva JUMBO roja sin semilla",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6600,
+    "precio_venta_kg": 8580,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Tomate comercial deshidratado",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 8400,
+    "precio_venta_kg": 10920,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Medallón de durazno elegido - grande",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 12300,
+    "precio_venta_kg": 15990,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Fruta escurrida nacional",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 2800,
+    "precio_venta_kg": 3640,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Ciruela sin carozo 88-110",
+    "proveedor": "FS",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 7900,
+    "precio_venta_kg": 10270,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Papaya multicolor nacional",
+    "proveedor": "FS",
+    "presentacion": "Caja 7kg",
+    "costo_kg": 5200,
+    "precio_venta_kg": 6760,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix clásico",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 10668,
+    "precio_venta_kg": 13870,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix brío",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 8513,
+    "precio_venta_kg": 11070,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix cervecero B",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 4000,
+    "precio_venta_kg": 5200,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix granola simple",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 4087,
+    "precio_venta_kg": 5310,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix granola tradicional",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6884,
+    "precio_venta_kg": 8950,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Patagónico",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 11736,
+    "precio_venta_kg": 15260,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Energía B",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 5849,
+    "precio_venta_kg": 7600,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix tropical feria B",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 5430,
+    "precio_venta_kg": 7060,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix tropical",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6013,
+    "precio_venta_kg": 7820,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Europeo",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 11655,
+    "precio_venta_kg": 15150,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix tropical premium",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 9852,
+    "precio_venta_kg": 12810,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix de Semillas",
+    "proveedor": "FS",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 4259,
+    "precio_venta_kg": 5540,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Frutos secos sin maní",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 13400,
+    "precio_venta_kg": 17420,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Caribe sin maní",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 12340,
+    "precio_venta_kg": 16040,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Happy Mix",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 9510,
+    "precio_venta_kg": 12360,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Salado",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 10060,
+    "precio_venta_kg": 13080,
+    "margen": 0.3
+  },
+  {
+    "categoria": "MIX",
+    "producto": "Mix Energético",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 8400,
+    "precio_venta_kg": 10920,
+    "margen": 0.3
+  },
+  {
+    "categoria": "COCO",
+    "producto": "Coco rallado mid fat 50%",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 8720,
+    "precio_venta_kg": 11340,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de sésamo blanco",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 5830,
+    "precio_venta_kg": 7580,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Semilla de sésamo negro",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 6500,
+    "precio_venta_kg": 8450,
+    "margen": 0.3
+  },
+  {
+    "categoria": "SEMILLAS",
+    "producto": "Quinoa real",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 8230,
+    "precio_venta_kg": 10700,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Ciruela pte sin carozo grande",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 14000,
+    "precio_venta_kg": 18200,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Ciruela dagen sin carozo cal. 110/132",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 6800,
+    "precio_venta_kg": 8840,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Higos negros deshidratados",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 13700,
+    "precio_venta_kg": 17810,
+    "margen": 0.3
+  },
+  {
+    "categoria": "FRUTA DESHIDRATADA",
+    "producto": "Pera grande",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 5kg",
+    "costo_kg": 11400,
+    "precio_venta_kg": 14820,
+    "margen": 0.3
+  },
+  {
+    "categoria": "ALMENDRA",
+    "producto": "Harina de almendra chilena con piel",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 19500,
+    "precio_venta_kg": 25350,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez cuartos extra light",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 11000,
+    "precio_venta_kg": 14300,
+    "margen": 0.3
+  },
+  {
+    "categoria": "NUEZ",
+    "producto": "Nuez cuartillo blanco",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 9800,
+    "precio_venta_kg": 12740,
+    "margen": 0.3
+  },
+  {
+    "categoria": "AVELLANA",
+    "producto": "Avellana 13/15 Chile",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 25000,
+    "precio_venta_kg": 32500,
+    "margen": 0.3
+  },
+  {
+    "categoria": "AVELLANA",
+    "producto": "Avellana 11/13 Chile",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 24500,
+    "precio_venta_kg": 31850,
+    "margen": 0.3
+  },
+  {
+    "categoria": "AVELLANA",
+    "producto": "Avellana partida Chile",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 21500,
+    "precio_venta_kg": 27950,
+    "margen": 0.3
+  },
+  {
+    "categoria": "AVENA",
+    "producto": "Avena instantánea gruesa",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Bolsa 25kg",
+    "costo_kg": 1970,
+    "precio_venta_kg": 2560,
+    "margen": 0.3
+  },
+  {
+    "categoria": "CASTAÑA DE CAJÚ",
+    "producto": "Castaña cajú Brasil W1S",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 22,68kg",
+    "costo_kg": 13400,
+    "precio_venta_kg": 17420,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas morena flame (2026)",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 3100,
+    "precio_venta_kg": 4030,
+    "margen": 0.3
+  },
+  {
+    "categoria": "PASAS DE UVA",
+    "producto": "Pasas morena super jumbo",
+    "proveedor": "DIFRUMARKET",
+    "presentacion": "Caja 10kg",
+    "costo_kg": 6200,
+    "precio_venta_kg": 8060,
+    "margen": 0.3
+  }
+]
