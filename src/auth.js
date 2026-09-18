@@ -9,9 +9,10 @@
 
 const fs = require("fs");
 const path = require("path");
+const { dataPath } = require("./data-dir");
 const crypto = require("crypto");
 
-const USUARIOS_FILE = path.join(__dirname, "data", "usuarios.json");
+const USUARIOS_FILE = dataPath("usuarios.json");
 const SESSION_COOKIE = "sesion";
 const SESSION_DURACION_MS = 30 * 24 * 60 * 60 * 1000; // 30 días
 

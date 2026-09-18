@@ -4,8 +4,9 @@
 
 const fs = require("fs");
 const path = require("path");
+const { dataPath } = require("./data-dir");
 
-const CHATS_FILE = path.join(__dirname, "data", "chats.json");
+const CHATS_FILE = dataPath("chats.json");
 
 function loadChats() {
   if (!fs.existsSync(CHATS_FILE)) return [];

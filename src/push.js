@@ -6,9 +6,10 @@
 
 const fs = require("fs");
 const path = require("path");
+const { dataPath } = require("./data-dir");
 const webpush = require("web-push");
 
-const SUBS_FILE = path.join(__dirname, "data", "push-subscriptions.json");
+const SUBS_FILE = dataPath("push-subscriptions.json");
 
 function configurarVapid() {
   const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_CONTACT_EMAIL } = process.env;

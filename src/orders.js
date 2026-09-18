@@ -6,8 +6,9 @@
 
 const fs = require("fs");
 const path = require("path");
+const { dataPath } = require("./data-dir");
 
-const ORDERS_FILE = path.join(__dirname, "data", "pedidos.json");
+const ORDERS_FILE = dataPath("pedidos.json");
 
 function loadOrders() {
   if (!fs.existsSync(ORDERS_FILE)) return [];

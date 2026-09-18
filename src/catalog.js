@@ -6,10 +6,24 @@
 
 const fs = require("fs");
 const path = require("path");
+const { dataPath } = require("./data-dir");
 
-const CATALOGO_FILE = path.join(__dirname, "data", "catalogo.json");
+const CATALOGO_FILE = dataPath("catalogo.json");
+
+// El catálogo con los 91 productos viaja versionado en el repo, en
+// src/data/catalogo.json — eso es lo que se sube a GitHub y se despliega
+// con el código. Pero si DATA_DIR apunta a un volumen persistente (en
+// producción), ese volumen arranca vacío la primera vez. Si el archivo
+// todavía no existe en destino, lo copiamos desde el que viene con el
+// código, una sola vez — las ediciones posteriores del panel quedan en
+// el volumen y sobreviven a futuros redeploys sin pisarse.
+const CATALOGO_SEMILLA = path.join(__dirname, "data", "catalogo.json");
+if (!fs.existsSync(CATALOGO_FILE) && fs.existsSync(CATALOGO_SEMILLA)) {
+  fs.copyFileSync(CATALOGO_SEMILLA, CATALOGO_FILE);
+}
 
 function loadCatalogo() {
+  if (!fs.existsSync(CATALOGO_FILE)) return [];
   return JSON.parse(fs.readFileSync(CATALOGO_FILE, "utf-8"));
 }
 
