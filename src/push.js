@@ -36,6 +36,7 @@ function saveSubs(subs) {
 
 /** Guarda la suscripción push de un admin (se llama desde el navegador al aceptar notificaciones). */
 function agregarSuscripcion(subscription, autor) {
+  if (!subscription || typeof subscription.endpoint !== "string") return;
   const subs = loadSubs();
   // Evitar duplicados si ya se había suscripto antes desde el mismo dispositivo
   const yaExiste = subs.some((s) => s.subscription.endpoint === subscription.endpoint);

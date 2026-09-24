@@ -27,7 +27,7 @@ function saveOrders(orders) {
  */
 function registrarPedido({ cliente, items }) {
   const orders = loadOrders();
-  const nuevoId = orders.length + 1;
+  const nuevoId = orders.reduce((max, o) => Math.max(max, o.id), 0) + 1;
 
   const nuevoPedido = {
     id: nuevoId,
