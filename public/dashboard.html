@@ -332,6 +332,57 @@
   .conv-encabezado strong { color: var(--tinta); font-size: 15px; font-weight: 600; }
   .conv-encabezado .numero { font-size: 12px; color: var(--texto-suave); }
 
+  .conv-encabezado .numero { display: block; margin-top: 2px; }
+
+  .buscador {
+    flex: 1;
+    min-width: 200px;
+    max-width: 380px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 8px 11px;
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+  }
+
+  .conv-responder { position: relative; }
+  .btn-emoji {
+    background: transparent;
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  .btn-emoji:hover { background: var(--fondo-sutil); }
+  .emoji-panel {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 18px;
+    width: min(320px, calc(100% - 36px));
+    max-height: 200px;
+    overflow-y: auto;
+    background: var(--fondo);
+    border: 1px solid var(--linea);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    z-index: 5;
+  }
+  .emoji-panel.abierto { display: grid; }
+  .emoji-panel button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+  }
+  .emoji-panel button:hover { background: var(--fondo-sutil); }
+
   .conv-mensajes {
     flex: 1;
     overflow-y: auto;
@@ -406,6 +457,7 @@
 
 <nav>
   <button class="tab-btn activo" data-tab="mensajes">Mensajes <span id="badge-mensajes" class="contador"></span></button>
+  <button class="tab-btn" data-tab="contactos">Contactos</button>
   <button class="tab-btn" data-tab="pedidos">Pedidos</button>
   <button class="tab-btn" data-tab="compra">Orden de compra</button>
   <button class="tab-btn" data-tab="catalogo">Catálogo</button>
@@ -423,6 +475,29 @@
         <div class="conv-vacio">Elegí una conversación de la izquierda para verla acá.</div>
       </div>
     </div>
+  </section>
+
+  <section id="tab-contactos">
+    <h2>Contactos</h2>
+    <p class="subtitulo">Agenda de clientes. El nombre que guardes acá aparece en la bandeja de mensajes.</p>
+    <div class="toolbar">
+      <input type="search" id="ct-buscar" class="buscador" placeholder="Buscar por nombre, dirección, teléfono…" />
+      <button class="btn" id="btn-nuevo-contacto">Nuevo contacto</button>
+    </div>
+    <div class="form-nuevo" id="form-contacto">
+      <div><label>Teléfono (con código de país, sin +)</label><input type="text" id="ct-numero" placeholder="5492604123456" /></div>
+      <div><label>Nombre</label><input type="text" id="ct-nombre" /></div>
+      <div><label>Empresa / negocio</label><input type="text" id="ct-empresa" /></div>
+      <div><label>Dirección</label><input type="text" id="ct-direccion" /></div>
+      <div><label>Localidad</label><input type="text" id="ct-localidad" /></div>
+      <div><label>Email</label><input type="text" id="ct-email" /></div>
+      <div style="grid-column: 1 / -1"><label>Notas</label><input type="text" id="ct-notas" /></div>
+      <div class="acciones">
+        <button class="btn" id="btn-guardar-contacto">Guardar</button>
+        <button class="btn secundario" id="btn-cancelar-contacto">Cancelar</button>
+      </div>
+    </div>
+    <div id="contactos-contenido">Cargando…</div>
   </section>
 
   <section id="tab-pedidos">
@@ -533,7 +608,7 @@ async function cargarChats() {
     return `
       <div class="chat-item ${c.noLeido ? "no-leido" : ""} ${chatActivo === c.cliente ? "activo" : ""}" data-cliente="${esc(c.cliente)}">
         <div class="chat-item-top">
-          <span class="chat-item-nombre">${esc(c.nombreContacto)}</span>
+          <span class="chat-item-nombre">${esc(nombreDe(c))}</span>
           <span class="chat-item-fecha">${fmtHora(c.ultimaActualizacion)}</span>
         </div>
         <span class="chat-item-preview">${esc(preview)}</span>
@@ -569,13 +644,18 @@ $("#btn-nuevo-chat").addEventListener("click", () => {
     alert("Número inválido: tienen que ser entre 8 y 15 dígitos, con código de país.");
     return;
   }
+  iniciarChat(numero);
+});
+
+function iniciarChat(numero) {
   chatNuevo = numero;
   chatActivo = numero;
   ultimoRenderChats = "";
   ultimoRenderConv = "";
+  $('.tab-btn[data-tab="mensajes"]').click();
   renderConversacion();
   cargarChats();
-});
+}
 
 async function renderConversacion() {
   if (!chatActivo) return;
@@ -593,6 +673,9 @@ async function renderConversacion() {
   const escribiendo = await escribiendoRes.json();
   const quien = escribiendo[chatActivo] && escribiendo[chatActivo] !== AUTOR ? escribiendo[chatActivo] : null;
 
+  const ficha = contactosCache[chat.cliente];
+  const dirLinea = ficha ? [ficha.direccion, ficha.localidad].filter(Boolean).join(", ") : "";
+
   const burbujas = chat.mensajes.map((m) => `
     <div class="burbuja ${m.direccion}">
       ${m.direccion === "saliente" ? `<span class="autor">${esc(m.autor)}</span>` : ""}
@@ -603,12 +686,18 @@ async function renderConversacion() {
 
   const html = `
     <div class="conv-encabezado">
-      <strong>${esc(chat.nombreContacto)}</strong>
-      <span class="numero">${esc(chat.cliente)}</span>
+      <div>
+        <strong>${esc(nombreDe(chat))}</strong>
+        <span class="numero">${esc(chat.cliente)}</span>
+        ${dirLinea ? `<span class="numero">${esc(dirLinea)}</span>` : ""}
+      </div>
+      <button class="btn chico secundario" id="conv-ficha">Ficha</button>
     </div>
     <div class="conv-mensajes" id="conv-mensajes">${burbujas}</div>
     <div class="conv-escribiendo-indicador">${quien ? esc(quien) + " está escribiendo acá…" : ""}</div>
     <div class="conv-responder">
+      <div class="emoji-panel" id="emoji-panel">${EMOJIS.map((e) => `<button type="button" data-emoji="${e}">${e}</button>`).join("")}</div>
+      <button type="button" class="btn-emoji" id="conv-emoji" title="Emojis">😊</button>
       <textarea id="conv-texto" placeholder="Escribí la respuesta…"></textarea>
       <button class="btn" id="conv-enviar">Enviar</button>
     </div>
@@ -619,6 +708,19 @@ async function renderConversacion() {
     ultimoRenderConv = html;
     const msgsDiv = $("#conv-mensajes");
     if (msgsDiv) msgsDiv.scrollTop = msgsDiv.scrollHeight;
+
+    $("#conv-ficha").addEventListener("click", () => editarContacto(chat.cliente));
+
+    const panelEmoji = $("#emoji-panel");
+    $("#conv-emoji").addEventListener("click", () => panelEmoji.classList.toggle("abierto"));
+    panelEmoji.addEventListener("click", (e) => {
+      const emoji = e.target.dataset.emoji;
+      if (!emoji) return;
+      const ta = $("#conv-texto");
+      ta.setRangeText(emoji, ta.selectionStart, ta.selectionEnd, "end");
+      ta.focus();
+      ta.dispatchEvent(new Event("input"));
+    });
 
     $("#conv-enviar").addEventListener("click", enviarRespuesta);
     $("#conv-texto").addEventListener("keydown", (e) => {
@@ -664,6 +766,110 @@ async function enviarRespuesta() {
 
 setInterval(cargarChats, 4000);
 setInterval(() => { if (chatActivo) renderConversacion(); }, 4000);
+
+// ================= EMOJIS =================
+
+const EMOJIS = ["😀","😃","😄","😁","😊","🙂","😉","😍","🥰","😘","😎","🤝","👍","👌","🙏","👏","💪","🙌","👋","✅","❌","⚠️","❗","❓","📦","🚚","🚛","📍","🏠","🏢","📞","📱","💬","📝","📅","⏰","💰","💵","💳","🧾","🌰","🥜","🍇","🍎","🍑","🍒","🥭","🍯","🌿","🌶️","☕","🍷","🎁","⭐","🔥","🎉","❤️","💚","😅","😂","🤔","😢","😔","🙈"];
+
+// ================= CONTACTOS =================
+
+let contactosCache = {};
+let contactosLista = [];
+
+const nombreDe = (chat) => (contactosCache[chat.cliente] && contactosCache[chat.cliente].nombre) || chat.nombreContacto;
+
+async function cargarContactos() {
+  const res = await fetch("/api/contactos");
+  contactosLista = await res.json();
+  contactosCache = Object.fromEntries(contactosLista.map((c) => [c.numero, c]));
+  renderContactos();
+}
+
+function renderContactos() {
+  const cont = $("#contactos-contenido");
+  const q = $("#ct-buscar").value.trim().toLowerCase();
+  const lista = contactosLista.filter((c) =>
+    !q || [c.numero, c.nombre, c.empresa, c.direccion, c.localidad, c.email, c.notas].some((v) => (v || "").toLowerCase().includes(q))
+  );
+
+  if (lista.length === 0) {
+    cont.innerHTML = `<div class="vacio">${contactosLista.length ? "Ningún contacto coincide con la búsqueda." : "Todavía no hay contactos guardados."}</div>`;
+    return;
+  }
+
+  cont.innerHTML = `
+    <table>
+      <thead><tr><th>Nombre</th><th>Empresa</th><th>Teléfono</th><th>Dirección</th><th>Localidad</th><th>Notas</th><th></th></tr></thead>
+      <tbody>${lista.map((c) => `
+        <tr data-numero="${esc(c.numero)}">
+          <td>${esc(c.nombre)}</td>
+          <td>${esc(c.empresa)}</td>
+          <td>${esc(c.numero)}</td>
+          <td>${esc(c.direccion)}</td>
+          <td>${esc(c.localidad)}</td>
+          <td>${esc(c.notas)}</td>
+          <td style="white-space:nowrap">
+            <button class="btn chico btn-chatear">Chatear</button>
+            <button class="btn chico secundario btn-editar">Editar</button>
+            <button class="btn chico peligro btn-borrar-contacto">Borrar</button>
+          </td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  `;
+
+  $$("tr[data-numero]", cont).forEach((fila) => {
+    const numero = fila.dataset.numero;
+    fila.querySelector(".btn-chatear").addEventListener("click", () => iniciarChat(numero));
+    fila.querySelector(".btn-editar").addEventListener("click", () => abrirFormContacto(numero));
+    fila.querySelector(".btn-borrar-contacto").addEventListener("click", async () => {
+      if (!confirm(`¿Borrar el contacto "${contactosCache[numero].nombre}"?`)) return;
+      await fetch(`/api/contactos/${encodeURIComponent(numero)}`, { method: "DELETE" });
+      cargarContactos();
+    });
+  });
+}
+
+const CAMPOS_CONTACTO = ["nombre", "empresa", "direccion", "localidad", "email", "notas"];
+
+function abrirFormContacto(numero) {
+  const ficha = (numero && contactosCache[numero]) || {};
+  $("#ct-numero").value = numero || "";
+  $("#ct-numero").readOnly = Boolean(contactosCache[numero]);
+  CAMPOS_CONTACTO.forEach((campo) => { $("#ct-" + campo).value = ficha[campo] || ""; });
+  $("#form-contacto").classList.add("abierto");
+  $("#ct-nombre").focus();
+}
+
+function editarContacto(numero) {
+  $('.tab-btn[data-tab="contactos"]').click();
+  abrirFormContacto(numero);
+}
+
+$("#ct-buscar").addEventListener("input", renderContactos);
+$("#btn-nuevo-contacto").addEventListener("click", () => abrirFormContacto(""));
+$("#btn-cancelar-contacto").addEventListener("click", () => $("#form-contacto").classList.remove("abierto"));
+$("#btn-guardar-contacto").addEventListener("click", async () => {
+  const numero = $("#ct-numero").value.replace(/\D/g, "");
+  const body = {};
+  CAMPOS_CONTACTO.forEach((campo) => { body[campo] = $("#ct-" + campo).value; });
+
+  const res = await fetch(`/api/contactos/${encodeURIComponent(numero)}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (res.ok) {
+    $("#form-contacto").classList.remove("abierto");
+    await cargarContactos();
+  } else {
+    const err = await res.json();
+    alert(err.error || "No se pudo guardar el contacto.");
+  }
+});
+
+setInterval(cargarContactos, 30000);
 
 // ================= PEDIDOS =================
 
@@ -896,6 +1102,7 @@ if (localStorage.getItem("push-activo") === "1") {
 // ---------- Carga inicial ----------
 cargarSesion();
 cargarChats();
+cargarContactos();
 cargarPedidos();
 cargarOrdenDeCompra();
 cargarCatalogo();

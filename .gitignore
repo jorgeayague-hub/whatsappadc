@@ -12,3 +12,6 @@ src/data/usuarios.json
 
 .DS_Store
 npm-debug.log
+
+# Agenda de contactos del negocio
+src/data/contactos.json

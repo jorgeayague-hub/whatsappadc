@@ -19,6 +19,7 @@ const {
   marcarLeido,
   contarNoLeidos,
 } = require("./messages");
+const { listarContactos, guardarContacto, eliminarContacto } = require("./contacts");
 const { marcarEscribiendo, listarEscribiendo } = require("./presence");
 const { configurarVapid, agregarSuscripcion, quitarSuscripcion, notificarTodos } = require("./push");
 const auth = require("./auth");
@@ -177,6 +178,29 @@ app.post("/api/chats/:cliente/leido", (req, res) => {
 
 app.get("/api/no-leidos", (req, res) => {
   res.json({ cantidad: contarNoLeidos() });
+});
+
+// --- Agenda de contactos ---
+
+app.get("/api/contactos", (req, res) => {
+  res.json(listarContactos());
+});
+
+app.put("/api/contactos/:numero", (req, res) => {
+  try {
+    res.json(guardarContacto(req.params.numero, req.body));
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.delete("/api/contactos/:numero", (req, res) => {
+  try {
+    eliminarContacto(req.params.numero);
+    res.status(204).send();
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 // --- Presencia en vivo ("Fulano está escribiendo acá") ---
