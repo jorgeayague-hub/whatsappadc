@@ -154,6 +154,10 @@ app.post("/api/chats/:cliente/responder", async (req, res) => {
       return res.status(400).json({ error: "El mensaje no puede estar vacío" });
     }
 
+    if (!/^\d{8,15}$/.test(cliente)) {
+      return res.status(400).json({ error: "Número inválido: usá solo dígitos con código de país (ej. 5492604123456)" });
+    }
+
     await sendWhatsAppMessage(cliente, texto);
     const chat = registrarMensajeSaliente(cliente, texto, req.usuarioActual);
     res.json(chat);

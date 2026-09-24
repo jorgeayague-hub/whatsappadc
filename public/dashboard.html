@@ -416,6 +416,7 @@
   <section id="tab-mensajes" class="activa">
     <h2>Mensajes</h2>
     <p class="subtitulo">Bandeja compartida — cualquiera de los dos puede responder cualquier chat. Se actualiza sola cada pocos segundos.</p>
+    <div class="toolbar"><button class="btn" id="btn-nuevo-chat">Nuevo chat</button></div>
     <div class="inbox">
       <div class="inbox-lista" id="lista-chats"><div class="vacio">Cargando…</div></div>
       <div class="inbox-conversacion" id="conversacion">
@@ -558,11 +559,35 @@ async function abrirChat(cliente) {
   cargarChats();
 }
 
+let chatNuevo = null;
+
+$("#btn-nuevo-chat").addEventListener("click", () => {
+  const entrada = prompt("Número de WhatsApp con código de país, sin + ni espacios (ej. 5492604123456):");
+  if (entrada === null) return;
+  const numero = entrada.replace(/\D/g, "");
+  if (!/^\d{8,15}$/.test(numero)) {
+    alert("Número inválido: tienen que ser entre 8 y 15 dígitos, con código de país.");
+    return;
+  }
+  chatNuevo = numero;
+  chatActivo = numero;
+  ultimoRenderChats = "";
+  ultimoRenderConv = "";
+  renderConversacion();
+  cargarChats();
+});
+
 async function renderConversacion() {
   if (!chatActivo) return;
   const res = await fetch(`/api/chats/${encodeURIComponent(chatActivo)}`);
-  if (!res.ok) return;
-  const chat = await res.json();
+  let chat;
+  if (res.ok) {
+    chat = await res.json();
+  } else if (chatActivo === chatNuevo) {
+    chat = { cliente: chatNuevo, nombreContacto: chatNuevo, mensajes: [] };
+  } else {
+    return;
+  }
 
   const escribiendoRes = await fetch("/api/escribiendo");
   const escribiendo = await escribiendoRes.json();

@@ -66,8 +66,19 @@ function registrarMensajeEntrante(cliente, texto, nombreContacto) {
  */
 function registrarMensajeSaliente(cliente, texto, autor) {
   const chats = loadChats();
-  const chat = chats.find((c) => c.cliente === cliente);
-  if (!chat) throw new Error(`No existe conversación con "${cliente}"`);
+  let chat = chats.find((c) => c.cliente === cliente);
+
+  if (!chat) {
+    chat = {
+      cliente,
+      nombreContacto: cliente,
+      mensajes: [],
+      noLeido: false,
+      creado: new Date().toISOString(),
+      ultimaActualizacion: new Date().toISOString(),
+    };
+    chats.push(chat);
+  }
 
   chat.mensajes.push({
     direccion: "saliente",
