@@ -334,6 +334,29 @@
 
   .conv-encabezado .numero { display: block; margin-top: 2px; }
 
+  .form-pedido {
+    display: none;
+    border: 1px solid var(--linea);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 18px;
+    background: var(--fondo-sutil);
+  }
+  .form-pedido.abierto { display: block; }
+  .form-pedido label { font-size: 12px; color: var(--texto-suave); display: block; margin-bottom: 4px; }
+  .form-pedido input {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 8px 10px;
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    background: var(--fondo);
+  }
+  .pd-item { display: grid; grid-template-columns: 1fr 110px auto; gap: 8px; margin-bottom: 8px; }
+  .form-pedido .acciones { display: flex; gap: 8px; margin-top: 14px; }
+  tr.oc-detalle td { font-size: 12px; color: var(--texto-suave); padding-top: 0; border-top: none; }
+
   .buscador {
     flex: 1;
     min-width: 200px;
@@ -503,13 +526,33 @@
   <section id="tab-pedidos">
     <h2>Pedidos</h2>
     <p class="subtitulo">Pedidos cargados a mano a partir de las conversaciones con clientes.</p>
+    <div class="toolbar"><button class="btn" id="btn-nuevo-pedido">Nuevo pedido</button></div>
+    <div class="form-pedido" id="form-pedido">
+      <label>Cliente</label>
+      <input type="text" id="pd-cliente" list="lista-clientes" placeholder="Elegí un contacto o escribí el nombre" autocomplete="off" />
+      <datalist id="lista-clientes"></datalist>
+      <datalist id="lista-productos"></datalist>
+      <label style="margin-top:12px">Productos</label>
+      <div id="pd-items"></div>
+      <button class="btn chico secundario" id="btn-pd-agregar-item" type="button">+ Agregar otro producto</button>
+      <div class="acciones">
+        <button class="btn" id="btn-guardar-pedido">Guardar pedido</button>
+        <button class="btn secundario" id="btn-cancelar-pedido">Cancelar</button>
+      </div>
+    </div>
     <div id="pedidos-contenido">Cargando…</div>
   </section>
 
   <section id="tab-compra">
     <h2>Orden de compra</h2>
     <p class="subtitulo">Consolidado por proveedor, calculado a partir de los pedidos pendientes de compra.</p>
-    <div class="toolbar"><button class="btn secundario" id="btn-refrescar-oc">Actualizar</button></div>
+    <div class="toolbar">
+      <button class="btn secundario" id="btn-refrescar-oc">Actualizar</button>
+      <span style="display:flex; gap:8px; flex-wrap:wrap">
+        <button class="btn secundario" id="btn-copiar-oc">Copiar texto para el proveedor</button>
+        <button class="btn" id="btn-confirmar-oc">Marcar como comprado</button>
+      </span>
+    </div>
     <div id="compra-contenido">Cargando…</div>
   </section>
 
@@ -889,6 +932,7 @@ async function cargarPedidos() {
       <td>${esc(p.cliente)}</td>
       <td>${fmtFecha(p.fecha)}</td>
       <td><ul class="items-lista">${p.items.map(i => `<li>${esc(i.cantidad_kg)} kg — ${esc(i.producto)}</li>`).join("")}</ul></td>
+      <td class="num">${p.items.some(i => i.precio_kg) ? fmtMoneda(p.items.reduce((acc, i) => acc + i.cantidad_kg * (i.precio_kg || 0), 0)) : "—"}</td>
       <td>
         <select data-id="${esc(p.id)}" class="estado-select">
           ${["pendiente_de_compra", "comprado", "preparado", "entregado"].map(e =>
@@ -901,7 +945,7 @@ async function cargarPedidos() {
 
   cont.innerHTML = `
     <table>
-      <thead><tr><th>N°</th><th>Cliente</th><th>Fecha</th><th>Items</th><th>Estado</th></tr></thead>
+      <thead><tr><th>N°</th><th>Cliente</th><th>Fecha</th><th>Items</th><th>Total venta</th><th>Estado</th></tr></thead>
       <tbody>${filas}</tbody>
     </table>
   `;
@@ -918,11 +962,69 @@ async function cargarPedidos() {
   });
 }
 
+// ================= CARGA DE PEDIDOS =================
+
+let productosCatalogo = [];
+
+function agregarFilaPedido() {
+  const fila = document.createElement("div");
+  fila.className = "pd-item";
+  fila.innerHTML = `
+    <input type="text" class="pd-producto" list="lista-productos" placeholder="Producto (escribí para buscar)" autocomplete="off" />
+    <input type="number" class="pd-kg" min="0" step="0.5" placeholder="kg" />
+    <button type="button" class="btn chico peligro pd-quitar">Quitar</button>
+  `;
+  fila.querySelector(".pd-quitar").addEventListener("click", () => {
+    if ($$(".pd-item").length > 1) fila.remove();
+  });
+  $("#pd-items").appendChild(fila);
+}
+
+async function abrirFormPedido() {
+  const [catRes, ctRes] = await Promise.all([fetch("/api/catalogo"), fetch("/api/contactos")]);
+  productosCatalogo = await catRes.json();
+  const contactos = await ctRes.json();
+  $("#lista-productos").innerHTML = productosCatalogo.map((p) => `<option value="${esc(p.producto)}"></option>`).join("");
+  $("#lista-clientes").innerHTML = contactos.map((c) => `<option value="${esc(c.nombre)}"></option>`).join("");
+  $("#pd-cliente").value = "";
+  $("#pd-items").innerHTML = "";
+  agregarFilaPedido();
+  $("#form-pedido").classList.add("abierto");
+  $("#pd-cliente").focus();
+}
+
+$("#btn-nuevo-pedido").addEventListener("click", abrirFormPedido);
+$("#btn-pd-agregar-item").addEventListener("click", agregarFilaPedido);
+$("#btn-cancelar-pedido").addEventListener("click", () => $("#form-pedido").classList.remove("abierto"));
+$("#btn-guardar-pedido").addEventListener("click", async () => {
+  const items = $$(".pd-item")
+    .map((f) => ({ producto: $(".pd-producto", f).value.trim(), cantidad_kg: parseFloat($(".pd-kg", f).value) }))
+    .filter((i) => i.producto || i.cantidad_kg);
+
+  const res = await fetch("/api/pedidos", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cliente: $("#pd-cliente").value, items }),
+  });
+
+  if (res.ok) {
+    $("#form-pedido").classList.remove("abierto");
+    cargarPedidos();
+    cargarOrdenDeCompra();
+  } else {
+    const err = await res.json();
+    alert(err.error || "No se pudo guardar el pedido.");
+  }
+});
+
 // ================= ORDEN DE COMPRA =================
+
+let ultimaOrden = null;
 
 async function cargarOrdenDeCompra() {
   const res = await fetch("/api/orden-de-compra");
   const orden = await res.json();
+  ultimaOrden = orden;
   const cont = $("#compra-contenido");
   const porProveedor = orden.ordenesPorProveedor || {};
   const proveedores = Object.keys(porProveedor);
@@ -941,6 +1043,7 @@ async function cargarOrdenDeCompra() {
         <td class="num">${fmtMoneda(i.costo_kg)}</td>
         <td class="num">${fmtMoneda(i.subtotal)}</td>
       </tr>
+      <tr class="oc-detalle"><td colspan="4">${i.clientes.map(c => `${esc(c.cliente)}: ${esc(c.cantidad_kg)} kg`).join(" · ")}</td></tr>
     `).join("");
     const subtotal = items.reduce((acc, i) => acc + i.subtotal, 0);
     return `
@@ -959,6 +1062,30 @@ async function cargarOrdenDeCompra() {
 }
 
 $("#btn-refrescar-oc").addEventListener("click", cargarOrdenDeCompra);
+
+$("#btn-copiar-oc").addEventListener("click", async () => {
+  if (!ultimaOrden || ultimaOrden.pedidosIncluidos.length === 0) return alert("No hay pedidos pendientes de compra.");
+  const texto = await (await fetch("/admin/orden-de-compra")).text();
+  try {
+    await navigator.clipboard.writeText(texto);
+    alert("Orden de compra copiada. Ya podés pegarla en un mensaje al proveedor.");
+  } catch {
+    prompt("Copiá el texto de la orden de compra:", texto);
+  }
+});
+
+$("#btn-confirmar-oc").addEventListener("click", async () => {
+  if (!ultimaOrden || ultimaOrden.pedidosIncluidos.length === 0) return alert("No hay pedidos pendientes de compra.");
+  const ids = ultimaOrden.pedidosIncluidos;
+  if (!confirm(`¿Marcar ${ids.length} pedido(s) como comprados? Van a salir de esta orden de compra.`)) return;
+  await fetch("/api/orden-de-compra/confirmar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids }),
+  });
+  cargarOrdenDeCompra();
+  cargarPedidos();
+});
 
 // ================= CATÁLOGO =================
 

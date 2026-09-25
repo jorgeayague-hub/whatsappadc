@@ -28,19 +28,21 @@ function generarOrdenDeCompra() {
   }
 
   // 1) Sumar cantidades por producto entre todos los pedidos pendientes
-  const totalesPorProducto = {}; // { "Nuez Mariposa Extra Light": 25, ... }
+  const totalesPorProducto = {}; // { "Nuez Mariposa": { total: 25, clientes: { "Juan": 10, ... } } }
 
   for (const pedido of pendientes) {
     for (const item of pedido.items) {
-      const key = item.producto;
-      totalesPorProducto[key] = (totalesPorProducto[key] || 0) + item.cantidad_kg;
+      const entrada = totalesPorProducto[item.producto] || { total: 0, clientes: {} };
+      entrada.total += item.cantidad_kg;
+      entrada.clientes[pedido.cliente] = (entrada.clientes[pedido.cliente] || 0) + item.cantidad_kg;
+      totalesPorProducto[item.producto] = entrada;
     }
   }
 
   // 2) Agrupar por proveedor usando el catálogo, calculando costo real
   const ordenesPorProveedor = {}; // { FS: { items: [...], total: N }, DIFRUMARKET: {...} }
 
-  for (const [producto, cantidadTotal] of Object.entries(totalesPorProducto)) {
+  for (const [producto, { total: cantidadTotal, clientes }] of Object.entries(totalesPorProducto)) {
     const infoProducto = buscarProducto(producto);
 
     if (!infoProducto) {
@@ -61,6 +63,7 @@ function generarOrdenDeCompra() {
       cantidad_kg: cantidadTotal,
       costo_kg,
       subtotal,
+      clientes: Object.entries(clientes).map(([cliente, cantidad_kg]) => ({ cliente, cantidad_kg })),
     });
     ordenesPorProveedor[proveedor].total += subtotal;
   }
@@ -93,6 +96,9 @@ function formatearOrdenDeCompra({ ordenesPorProveedor, totalGeneral }) {
       lineas.push(
         `- ${item.producto} (${item.presentacion}): ${item.cantidad_kg}kg x $${item.costo_kg.toLocaleString("es-AR")} = $${item.subtotal.toLocaleString("es-AR")}`
       );
+      for (const c of item.clientes || []) {
+        lineas.push(`    · ${c.cliente}: ${c.cantidad_kg}kg`);
+      }
     }
     lineas.push(`Subtotal ${proveedor}: $${orden.total.toLocaleString("es-AR")}`);
     lineas.push("");

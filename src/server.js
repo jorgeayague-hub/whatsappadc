@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { sendWhatsAppMessage } = require("./whatsapp");
 const { registrarPedido, listarTodosLosPedidos, actualizarEstadoPedido } = require("./orders");
-const { generarOrdenDeCompra, formatearOrdenDeCompra } = require("./purchasing");
+const { generarOrdenDeCompra, formatearOrdenDeCompra, marcarPedidosComoComprados } = require("./purchasing");
 const { loadCatalogo, agregarProducto, actualizarProducto, eliminarProducto } = require("./catalog");
 const {
   listarChats,
@@ -264,6 +264,12 @@ app.patch("/api/pedidos/:id/estado", (req, res) => {
 app.get("/api/orden-de-compra", (req, res) => {
   const orden = generarOrdenDeCompra();
   res.json(orden);
+});
+
+app.post("/api/orden-de-compra/confirmar", (req, res) => {
+  const ids = Array.isArray(req.body.ids) ? req.body.ids.map(Number).filter(Number.isInteger) : [];
+  marcarPedidosComoComprados(ids);
+  res.json({ marcados: ids.length });
 });
 
 app.get("/admin/orden-de-compra", (req, res) => {

@@ -7,6 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const { dataPath } = require("./data-dir");
+const { loadCatalogo } = require("./catalog");
 
 const ORDERS_FILE = dataPath("pedidos.json");
 
@@ -26,14 +27,30 @@ function saveOrders(orders) {
  * @param {Array<{producto: string, cantidad_kg: number}>} order.items
  */
 function registrarPedido({ cliente, items }) {
+  const nombreCliente = String(cliente || "").trim();
+  if (!nombreCliente) throw new Error("Falta el cliente");
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error("El pedido necesita al menos un producto");
+  }
+
+  const catalogo = loadCatalogo();
+  const itemsValidados = items.map((item) => {
+    const buscado = String(item.producto || "").toLowerCase();
+    const prod = catalogo.find((p) => p.producto.toLowerCase() === buscado);
+    if (!prod) throw new Error(`Producto no encontrado en el catálogo: "${item.producto}"`);
+    const kg = Number(item.cantidad_kg);
+    if (!(kg > 0)) throw new Error(`Cantidad inválida para "${prod.producto}"`);
+    return { producto: prod.producto, cantidad_kg: kg, precio_kg: prod.precio_venta_kg };
+  });
+
   const orders = loadOrders();
   const nuevoId = orders.reduce((max, o) => Math.max(max, o.id), 0) + 1;
 
   const nuevoPedido = {
     id: nuevoId,
     numero: `#${String(nuevoId).padStart(4, "0")}`,
-    cliente,
-    items,
+    cliente: nombreCliente,
+    items: itemsValidados,
     fecha: new Date().toISOString(),
     estado: "pendiente_de_compra", // pendiente_de_compra -> comprado -> preparado -> entregado
   };
